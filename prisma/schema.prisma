@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js" // Gerador de código para o Prisma Client
+}
+
+datasource db {
+  provider = "mysql" // Tipo de banco de dados
+  url      = env("DATABASE_URL") // Variável de ambiente que contém a string de conexão com o banco de dados
+}
+
+model Category {
+  id          Int     @id @default(autoincrement()) // Tipo inteiro, chave primária e auto incremento
+  name        String  @db.VarChar(255) // Tipo texto com limite de 255 caracteres
+  description String? @db.Text // Tipo texto sem limite de caracteres
+  Video       Video[]
+}
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  file_path   String   @db.VarChar(255)
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id Int
+}
