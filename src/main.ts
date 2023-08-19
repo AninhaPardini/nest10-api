@@ -4,6 +4,7 @@ import { PrismaExceptionFilter } from './exception-filters/prisma.exception-filt
 import { CatchAllErrorsExceptionFilter } from './exception-filters/catch-all-errors.exception-filter';
 import { ValidationPipe } from '@nestjs/common';
 import { InvalidRelationExceptionFilter } from './exception-filters/invalid-relation.exception-filter';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,16 @@ async function bootstrap() {
       transform: true,
     })
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('NestJS API')
+    .setDescription('The NestJS API description')
+    .setVersion('1.0')
+    .addTag('videos')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

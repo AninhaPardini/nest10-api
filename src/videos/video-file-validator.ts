@@ -5,7 +5,7 @@ export class VideoFileValidator extends FileValidator {
     isValid(file?: IFile): boolean | Promise<boolean> {
         console.log(file, this.validationOptions);
         return (
-            file.mimetype === this.validationOptions.mimetype &&
+            file.mimetype === this.validationOptions.mimeType &&
             file.size < this.validationOptions.maxSize
         );
     }
@@ -14,8 +14,8 @@ export class VideoFileValidator extends FileValidator {
             return 'File is required';
         }
 
-        if (file.mimetype !== this.validationOptions.mimetype) {
-            return `File must be ${this.validationOptions.mimetype}`;
+        if (file.mimetype !== this.validationOptions.mimeType) {
+            return `File must be ${this.validationOptions.mimeType}`;
         }
 
         if (file.size > this.validationOptions.maxSize) {
